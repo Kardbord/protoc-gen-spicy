@@ -13,7 +13,7 @@ int main() {
   int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
   if (sockfd < 0) {
     std::cerr << "Error creating socket" << std::endl;
-    return 1;
+    return EXIT_FAILURE;
   }
 
   // Server address and port
@@ -32,7 +32,7 @@ int main() {
   if (bytesSent < 0) {
     std::cerr << "Error sending data" << std::endl;
     close(sockfd);
-    return 1;
+    return EXIT_FAILURE;
   }
 
   std::cout << "Sent " << bytesSent << " bytes to the server." << std::endl;
@@ -40,7 +40,7 @@ int main() {
   // Close the socket
   close(sockfd);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 #endif // __linux__

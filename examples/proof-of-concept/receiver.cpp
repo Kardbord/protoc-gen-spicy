@@ -13,7 +13,7 @@ int main() {
   int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
   if (sockfd < 0) {
     std::cerr << "Error creating socket" << std::endl;
-    return 1;
+    return EXIT_FAILURE;
   }
 
   // Bind the socket to a port
@@ -26,18 +26,19 @@ int main() {
   if (bind(sockfd, (struct sockaddr *) &serverAddr, sizeof(serverAddr)) < 0) {
     std::cerr << "Error binding socket" << std::endl;
     close(sockfd);
-    return 1;
+    return EXIT_FAILURE;
   }
 
   // Receive data
   char buffer[1024]; // Buffer to store received data
   struct sockaddr_in clientAddr;
   socklen_t clientAddrLen = sizeof(clientAddr);
+  std::cout << "Waiting to receive...\n";
   int bytesReceived       = recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *) &clientAddr, &clientAddrLen);
   if (bytesReceived < 0) {
     std::cerr << "Error receiving data" << std::endl;
     close(sockfd);
-    return 1;
+    return EXIT_FAILURE;
   }
 
   std::cout << "Received " << bytesReceived << " bytes from " << inet_ntoa(clientAddr.sin_addr) << ":" << ntohs(clientAddr.sin_port) << std::endl;
@@ -49,7 +50,7 @@ int main() {
   // Close the socket
   close(sockfd);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 #endif // __linux__
