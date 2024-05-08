@@ -18,14 +18,14 @@ else()
   )
 endif()
 
-#find_package(Boost REQUIRED)
-#include_directories(${Boost_INCLUDE_DIRS})
-
 include_directories(include)
 include_directories(src)
-set("${CMAKE_PROJECT_NAME}_SRC"
-  main.cpp
-  src/Foo.cpp
-)
-add_executable(${CMAKE_PROJECT_NAME} ${${CMAKE_PROJECT_NAME}_SRC})
-#target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Boost::headers)
+#set("${CMAKE_PROJECT_NAME}_SRC"
+#)
+#add_executable(${CMAKE_PROJECT_NAME} ${${CMAKE_PROJECT_NAME}_SRC})
+
+option(PGS_BUILD_EXAMPLES "Include examples in the build" OFF)
+
+if(PGS_BUILD_EXAMPLES)
+  add_subdirectory(examples/)
+endif()
