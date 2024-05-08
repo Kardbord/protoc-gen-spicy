@@ -38,8 +38,7 @@ int main() {
   std::cout << "Waiting to receive...\n";
   int bytesReceived = recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *) &clientAddr, &clientAddrLen);
   if (bytesReceived < 0) {
-    std::cerr << "Error receiving data"
-              << "\n";
+    std::cerr << "Error receiving data\n";
     close(sockfd);
     return EXIT_FAILURE;
   }
