@@ -28,11 +28,10 @@ int main() {
   SimpleMessage msg;
   msg.set_message("Hello, UDP Server!");
   msg.set_id(42);
-  const char *message = msg.SerializeAsString().c_str();
-  int messageSize     = strlen(message);
 
   // Send data
-  int bytesSent = sendto(sockfd, message, messageSize, 0, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
+  std::string payload = msg.SerializeAsString();
+  int bytesSent       = sendto(sockfd, payload.c_str(), payload.size(), 0, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
   if (bytesSent < 0) {
     std::cerr << "Error sending data"
               << "\n";
@@ -42,8 +41,9 @@ int main() {
 
   std::cout << "Sent " << bytesSent << " bytes to " << inet_ntoa(serverAddr.sin_addr) << ":" << ntohs(serverAddr.sin_port) << "\n"
             << "Raw Data:\n"
-            << bufferToHexStr(message, messageSize) << "\n"
-            << "Deserialized Message:\n" << msg.ShortDebugString() << "\n";
+            << bufferToHexStr(payload.c_str(), payload.size()) << "\n"
+            << "Deserialized Message:\n"
+            << msg.ShortDebugString() << "\n";
 
   // Close the socket
   close(sockfd);
