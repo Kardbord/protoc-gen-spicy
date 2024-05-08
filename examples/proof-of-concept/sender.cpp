@@ -1,6 +1,7 @@
 #ifdef __linux__
 
 #include <arpa/inet.h>
+#include <constants.hpp>
 #include <cstring>
 #include <iostream>
 #include <netinet/in.h>
@@ -19,8 +20,8 @@ int main() {
   struct sockaddr_in serverAddr;
   memset(&serverAddr, 0, sizeof(serverAddr));
   serverAddr.sin_family      = AF_INET;
-  serverAddr.sin_port        = htons(12345);           // Example port number
-  serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1"); // Example IP address
+  serverAddr.sin_port        = htons(PORT);             // Example port number
+  serverAddr.sin_addr.s_addr = inet_addr(ADDR.c_str()); // Example IP address
 
   // Data to send
   const char *message = "Hello, UDP Server!";

@@ -1,6 +1,7 @@
 #ifdef __linux__
 
 #include <arpa/inet.h>
+#include <constants.hpp>
 #include <cstring>
 #include <iostream>
 #include <netinet/in.h>
@@ -19,8 +20,8 @@ int main() {
   struct sockaddr_in serverAddr;
   memset(&serverAddr, 0, sizeof(serverAddr));
   serverAddr.sin_family      = AF_INET;
-  serverAddr.sin_port        = htons(12345); // Example port number
-  serverAddr.sin_addr.s_addr = INADDR_ANY;   // Accept connections from any IP address
+  serverAddr.sin_port        = htons(PORT);
+  serverAddr.sin_addr.s_addr = INADDR_ANY; // Accept connections from any IP address
 
   if (bind(sockfd, (struct sockaddr *) &serverAddr, sizeof(serverAddr)) < 0) {
     std::cerr << "Error binding socket" << std::endl;
