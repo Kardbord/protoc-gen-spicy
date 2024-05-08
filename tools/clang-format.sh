@@ -17,7 +17,7 @@ function main {
   pushd "${WD}" >/dev/null
   for d in "${SRC_DIRS[@]}"; do
     # shellcheck disable=2038
-    find "${d}" -iname '*.h' -o -iname '*.cpp' | xargs clang-format -i -style=file
+    find "${d}" -iname '*.h' -o -iname '*.cpp' -o -iname '*.hpp' | xargs clang-format -i -style=file
   done
   popd >/dev/null
 }

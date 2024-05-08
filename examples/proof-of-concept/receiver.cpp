@@ -21,7 +21,7 @@ int main() {
   memset(&serverAddr, 0, sizeof(serverAddr));
   serverAddr.sin_family      = AF_INET;
   serverAddr.sin_port        = htons(PORT);
-  serverAddr.sin_addr.s_addr = INADDR_ANY; // Accept connections from any IP address
+  serverAddr.sin_addr.s_addr = inet_addr(ADDR.c_str());
 
   if (bind(sockfd, (struct sockaddr *) &serverAddr, sizeof(serverAddr)) < 0) {
     std::cerr << "Error binding socket" << std::endl;
