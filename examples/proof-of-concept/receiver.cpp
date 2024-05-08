@@ -44,17 +44,19 @@ int main() {
     return EXIT_FAILURE;
   }
 
-  std::cout << "Received " << bytesReceived << " bytes from " << inet_ntoa(clientAddr.sin_addr) << ":" << ntohs(clientAddr.sin_port) << "\n";
-
   // Print the received data
-  buffer[bytesReceived] = '\0';
-  std::cout << "Raw Message: " << bufferToHexStr(buffer, bytesReceived) << "\n";
+  std::cout << "Received " << bytesReceived << " bytes from " << inet_ntoa(clientAddr.sin_addr) << ":" << ntohs(clientAddr.sin_port) << "\n"
+            << "Raw Data:\n"
+            << bufferToHexStr(buffer, bytesReceived) << "\n";
 
   // Deserialize protobuf message
   SimpleMessage msg;
-  msg.ParseFromString({buffer, static_cast<size_t>(bytesReceived)});
+  if (!msg.ParseFromArray(buffer, bytesReceived)) {
+    std::cerr << "Error deserializing data\n";
+    return EXIT_FAILURE;
+  }
 
-  std::cout << "Deserialized Message: " << msg.ShortDebugString() << "\n";
+  std::cout << "Deserialized Message:\n" << msg.ShortDebugString() << "\n";
 
   // Close the socket
   close(sockfd);

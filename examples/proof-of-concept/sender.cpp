@@ -40,8 +40,10 @@ int main() {
     return EXIT_FAILURE;
   }
 
-  std::cout << "Sent " << bufferToHexStr(message, messageSize) << " to the server."
-            << "\n";
+  std::cout << "Sent " << bytesSent << " bytes to " << inet_ntoa(serverAddr.sin_addr) << ":" << ntohs(serverAddr.sin_port) << "\n"
+            << "Raw Data:\n"
+            << bufferToHexStr(message, messageSize) << "\n"
+            << "Deserialized Message:\n" << msg.ShortDebugString() << "\n";
 
   // Close the socket
   close(sockfd);
